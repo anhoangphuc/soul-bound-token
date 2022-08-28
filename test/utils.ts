@@ -2,7 +2,7 @@ import { ethers } from "hardhat";
 import {BytesLike} from "ethers";
 import EthCrypto from 'eth-crypto';
 
-async function encryptAMessage(publicKey: string, secret: number) {
+export async function encryptAMessage(publicKey: string, secret: number) {
     const encrypted = await EthCrypto.encryptWithPublicKey(
         publicKey,
         JSON.stringify(secret)
@@ -10,7 +10,7 @@ async function encryptAMessage(publicKey: string, secret: number) {
     return EthCrypto.cipher.stringify(encrypted);
 }
 
-async function decryptMessage(privateKey: string, encrypted: string) {
+export async function decryptMessage(privateKey: string, encrypted: string) {
     const encryptedObject = EthCrypto.cipher.parse(encrypted);
     const decrypted = await EthCrypto.decryptWithPrivateKey(privateKey, encryptedObject);
     const decryptedPayload = JSON.parse(decrypted);
@@ -24,4 +24,4 @@ async function decryptMessage(privateKey: string, encrypted: string) {
 
     const decryptedX = await decryptMessage(account1.privateKey, x);
     console.log(decryptedX);
-})()
+})
